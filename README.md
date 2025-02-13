@@ -34,3 +34,6 @@ CUDA_VISIBLE_DEVICES=0 TF_CPP_MIN_LOG_LEVEL=3 python main.py
 ```bash
 streamlit run essentify.py
 ```
+
+## Analysis report
+[**View analysis report on MusAV**](https://github.com/enter-opy/essentify/blob/main/notebooks/analysis.ipynb)
