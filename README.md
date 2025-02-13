@@ -36,4 +36,11 @@ streamlit run essentify.py
 ```
 
 ## Analysis report
-[**View analysis report on MusAV**](https://github.com/enter-opy/essentify/blob/main/notebooks/analysis.ipynb)
+Create analysis report
+
+```bash
+jupyter notebook
+```
+
+**View analysis report on [MUSAV](https://repositori.upf.edu/items/ea4c4a4c-958f-4004-bdc2-e1f6ad7e6829) dataset**
+[Notebook](https://github.com/enter-opy/essentify/blob/main/notebooks/analysis.ipynb)
