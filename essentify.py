@@ -4,9 +4,9 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-from utils.filters import Filters
+from utils.collection import Collection
 
-filters = Filters()
+collection = Collection()
 with open('models/metadata/genre_discogs400-discogs-effnet-1.json', 'r') as f:
     mappings = json.load(f)
 
@@ -27,7 +27,7 @@ def save_playlist(filenames):
 
 def search_similar_tracks(filename):
     # Filter by similarity
-    results = filters.search_similar_tracks(filename, embedding_model.lower())
+    results = collection.search_similar_tracks(filename, embedding_model.lower())
 
     # Get top 10 tracks
     results = results.head(10)
@@ -56,22 +56,22 @@ def search_similar_tracks(filename):
 
 def filter_results():
     # Filter by style
-    results = filters.sort_by_style(mappings['classes'].index(style))
+    results = collection.sort_by_style(mappings['classes'].index(style))
 
     # Filter by tempo
-    results = filters.filter_by_tempo(results, tempo)
+    results = collection.filter_by_tempo(results, tempo)
 
     # Filter by instrumentals
-    results = filters.filter_instrumentals(results, require_instrumentals)
+    results = collection.filter_instrumentals(results, require_instrumentals)
 
     # Filter by dancability
-    results = filters.filter_by_dancability(results, dancability)
+    results = collection.filter_by_dancability(results, dancability)
     
     # Filter by arousal and valence
-    results = filters.filter_by_arousal_and_valence(results, arousal, valence)
+    results = collection.filter_by_arousal_and_valence(results, arousal, valence)
 
     # Filter by key and scale
-    results = filters.filter_by_key_and_scale(results, key, scale)
+    results = collection.filter_by_key_and_scale(results, key, scale)
 
     # Get top 10 tracks
     results = results.head(10)

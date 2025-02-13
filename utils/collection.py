@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import json
 
-class Filters:
+class Collection:
     def __init__(self):
         self.results = pd.read_json('results/results.json').transpose()
         self.embeddings = pd.read_json('results/embeddings.json').transpose()
