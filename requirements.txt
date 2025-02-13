@@ -1,0 +1,8 @@
+essentia
+essentia-tensorflow
+numpy==1.26.4
+matplotlib
+pandas
+seaborn
+streamlit
+tqdm

@@ -11,15 +11,15 @@ with open('models/metadata/genre_discogs400-discogs-effnet-1.json', 'r') as f:
     mappings = json.load(f)
 
 def save_playlist(filenames):
+    # Playlist name and path
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
     extension = '.m3u'
     name = timestamp + extension
     dirname = 'playlists'
-
     os.makedirs(dirname, exist_ok=True)
-
     path = os.path.join(dirname, name)
 
+    # Write to m3u file
     with open(path, "w", encoding="utf-8") as f:
         for filename in filenames:
             f.write(f"{os.path.join('..', filename)}\n")
@@ -116,7 +116,8 @@ with st.sidebar:
     valence = st.select_slider('Valence', options=range(10), value=(0, 9))
     
     col1, col2 = st.columns(2)
-
+    
+    # Key dropdown menu
     with col1:
         key = st.selectbox('Key', options=['All', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'], index=0)
 
@@ -126,7 +127,6 @@ with st.sidebar:
 
     # Embedding model dropdown menu
     embedding_model = st.selectbox('Embedding model', options=['Effnet', 'MusiCNN'], index=0)
-
     
     # Search button
     button = st.button('Search', on_click=filter_results)
