@@ -47,4 +47,5 @@ jupyter notebook
 - Open and run `notebooks/analysis.ipynb`.
 
 **View analysis report on [MUSAV](https://repositori.upf.edu/items/ea4c4a4c-958f-4004-bdc2-e1f6ad7e6829) dataset**
+
 [Notebook](https://github.com/enter-opy/essentify/blob/main/notebooks/analysis.ipynb)
