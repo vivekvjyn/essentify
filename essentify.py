@@ -1,6 +1,6 @@
+import streamlit as st
 import os.path
 import json
-import streamlit as st
 import pandas as pd
 from datetime import datetime
 
@@ -8,7 +8,7 @@ from utils.collection import Collection
 
 collection = Collection()
 with open('models/metadata/genre_discogs400-discogs-effnet-1.json', 'r') as f:
-    mappings = json.load(f)
+    mappings = json.load(f)['classes']
 
 def save_playlist(filenames):
     # Playlist name and path
@@ -30,15 +30,14 @@ def search_similar_tracks(filename):
     results = collection.search_similar_tracks(filename, embedding_model.lower())
 
     # Get top 10 tracks
-    results = results.head(10)
+    results = results.head(num_tracks)
 
     # Get filenames
     filenames = results.index
 
-    col1, col2 = st.columns(2)
-
     # Save button
     save = st.button('Save playlist', on_click=lambda f=filenames: save_playlist(f))
+    
 
     # Display results
     for filename in filenames:
@@ -56,7 +55,7 @@ def search_similar_tracks(filename):
 
 def filter_results():
     # Filter by style
-    results = collection.sort_by_style(mappings['classes'].index(style))
+    results = collection.sort_by_style(mappings.index(style.replace('-', '---')))
 
     # Filter by tempo
     results = collection.filter_by_tempo(results, tempo)
@@ -74,7 +73,7 @@ def filter_results():
     results = collection.filter_by_key_and_scale(results, key, scale)
 
     # Get top 10 tracks
-    results = results.head(10)
+    results = results.head(num_tracks)
     
     # Get filenames
     filenames = results.index
@@ -98,7 +97,7 @@ def filter_results():
 
 with st.sidebar:
     # Music style dropdown menu
-    style = st.selectbox('Style', options=mappings['classes'], index=0)
+    style = st.selectbox('Style', options=[c.replace('---', '-') for c in mappings], index=0)
 
     # Tempo slider
     tempo = st.slider('Tempo', min_value=60, max_value=240, value=120)
@@ -126,7 +125,10 @@ with st.sidebar:
         scale = st.selectbox('Scale', options=['All', 'Major', 'Minor'], index=0)
 
     # Embedding model dropdown menu
-    embedding_model = st.selectbox('Embedding model', options=['Effnet', 'MusiCNN'], index=0)
+    embedding_model = st.selectbox('Embeddings', options=['Effnet', 'MusiCNN'], index=0)
+
+    # Number of tracks input
+    num_tracks = st.number_input('Number of tracks', min_value=1, max_value=50, value=10, step=1)
     
     # Search button
     button = st.button('Search', on_click=filter_results)

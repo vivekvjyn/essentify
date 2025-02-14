@@ -25,7 +25,6 @@ class Collection:
     def filter_by_tempo(self, results, tempo):
         results['distance'] = abs(results['tempo'] - tempo)
         results = results[results['distance'] < 10]
-        results = results.sort_values(by='distance')
         results = results.drop('distance', axis=1)
 
         return results
@@ -42,6 +41,8 @@ class Collection:
 
     def filter_by_dancability(self, results, dancability):
         min_dancability, max_dancability = dancability
+        min_dancability /= 100
+        max_dancability /= 100
 
         results = results[results['dancability confidence'] >= min_dancability]
         results = results[results['dancability confidence'] <= max_dancability]
@@ -52,18 +53,22 @@ class Collection:
     def filter_by_arousal_and_valence(self, results, arousal, valence):
         min_arousal, max_arousal = arousal
         min_valence, max_valence = valence
-
-        results = results[results['arousal'] >= min_arousal]
-        results = results[results['arousal'] <= max_arousal]
-        results = results[results['valence'] >= min_valence]
-        results = results[results['valence'] <= max_valence]
+        
+        if min_arousal > 0:
+            results = results[results['arousal'] >= min_arousal]
+        if max_arousal < 9:
+            results = results[results['arousal'] <= max_arousal]
+        if max_arousal > 0:
+            results = results[results['valence'] >= min_valence]
+        if max_valence < 9:
+            results = results[results['valence'] <= max_valence]
 
         return results
 
 
     def filter_by_key_and_scale(self, results, key, scale):
         if key != 'All':
-            results = results[results['key (edma)'] == key.lower()]
+            results = results[results['key (edma)'] == key]
 
         if scale != 'All':
             results = results[results['scale (edma)'] == scale.lower()]
