@@ -38,6 +38,8 @@ def search_similar_tracks(filename):
     # Save button
     save = st.button('Save playlist', on_click=lambda f=filenames: save_playlist(f))
     
+    if not len(filenames):
+        st.write('No matches')
 
     # Display results
     for filename in filenames:
@@ -64,7 +66,7 @@ def filter_results():
     results = collection.filter_instrumentals(results, require_instrumentals)
 
     # Filter by dancability
-    results = collection.filter_by_dancability(results, dancability)
+    results = collection.filter_by_danceability(results, danceability)
     
     # Filter by arousal and valence
     results = collection.filter_by_arousal_and_valence(results, arousal, valence)
@@ -81,6 +83,9 @@ def filter_results():
     # Save button
     save = st.button('Save playlist', on_click=lambda f=filenames: save_playlist(f))
     
+    if not len(filenames):
+        st.write('No matches')
+
     # Display results
     for filename in filenames:
         with st.container():
@@ -106,7 +111,7 @@ with st.sidebar:
     require_instrumentals = st.toggle('Instrumental', value=False)
 
     # Dancability range selector
-    dancability = st.select_slider('Dancability', options=range(100 + 1), value=(0, 100))
+    danceability = st.select_slider('Danceability', options=range(100 + 1), value=(0, 100))
 
     # Arousal range selector
     arousal = st.select_slider('Arousal', options=range(10), value=(0, 9))

@@ -14,7 +14,7 @@ from utils.loudnessExtractor import LoudnessExtractor
 from utils.embeddingsGenerator import EmbeddingsGenerator
 from utils.genreClassifier import GenreClassifier
 from utils.instrumentalClassifier import InstrumentalClassifier
-from utils.dancabilityClassifier import DancabilityClassifier
+from utils.danceabilityClassifier import DanceabilityClassifier
 from utils.arousalValenceEstimator import ArousalValenceEstimator
 
 PATH = './audio'
@@ -28,7 +28,7 @@ def analyze_files(pbar, path=PATH):
     embeddingsGenerator = EmbeddingsGenerator()
     genreClassifier = GenreClassifier()
     instrumentalClassifier = InstrumentalClassifier()
-    dancabilityClassifier = DancabilityClassifier()
+    danceabilityClassifier = DanceabilityClassifier()
     arousalValenceEstimator = ArousalValenceEstimator()
 
     results = {}
@@ -52,9 +52,9 @@ def analyze_files(pbar, path=PATH):
 
             genre, sub_genre, genre_activations = genreClassifier.classify_genre(effnet_embeddings)
 
-            instrumental = instrumentalClassifier.is_instrumental(effnet_embeddings)
+            is_instrumental = instrumentalClassifier.is_instrumental(effnet_embeddings)
 
-            dancable, confidence = dancabilityClassifier.is_dancable(effnet_embeddings)
+            is_danceable, confidence = danceabilityClassifier.is_dancable(effnet_embeddings)
 
             arousal, valence = arousalValenceEstimator.estimate_arousal_and_valence(musicnn_embeddings)
                 
@@ -68,9 +68,9 @@ def analyze_files(pbar, path=PATH):
                     'loudness': loudness,
                     'genre': genre,
                     'sub genre': sub_genre,
-                    'instrumental': 'Instrumental' if instrumental else 'Voice',
-                    'dancability': 'Dancable' if dancable else 'Not dancable',
-                    'dancability confidence': confidence.astype(float),
+                    'instrumental': 'Instrumental' if is_instrumental else 'Voice',
+                    'danceability': 'Danceable' if is_danceable else 'Not danceable',
+                    'danceability confidence': confidence.astype(float),
                     'arousal': arousal.astype(float),
                     'valence': valence.astype(float)
                 }

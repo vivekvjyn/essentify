@@ -39,13 +39,13 @@ class Collection:
         return results
 
 
-    def filter_by_dancability(self, results, dancability):
-        min_dancability, max_dancability = dancability
-        min_dancability /= 100
-        max_dancability /= 100
+    def filter_by_danceability(self, results, danceability):
+        min_danceability, max_danceability = danceability
+        min_danceability /= 100
+        max_danceability /= 100
 
-        results = results[results['dancability confidence'] >= min_dancability]
-        results = results[results['dancability confidence'] <= max_dancability]
+        results = results[results['danceability confidence'] >= min_danceability]
+        results = results[results['danceability confidence'] <= max_danceability]
 
         return results
 
