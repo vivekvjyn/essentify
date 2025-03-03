@@ -8,8 +8,8 @@
 git clone https://github.com/enter-opy/essentify.git
 cd essentify
 ```
-
-*essentia is not supported on windows. To run essentify on windows install [WSL](https://ubuntu.com/desktop/wsl)*
+>[!Note]
+>essentia is not supported on windows. To run essentify on windows install [WSL](https://ubuntu.com/desktop/wsl)
 
 ```bash
 wsl -d Ubuntu
