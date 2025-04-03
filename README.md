@@ -5,7 +5,7 @@
 **Clone the repository**
 
 ```bash
-git clone https://github.com/enter-opy/essentify.git
+git clone https://github.com/vivekvjyn/essentify.git
 cd essentify
 ```
 >[!Note]
